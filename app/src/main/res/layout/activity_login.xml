@@ -37,7 +37,7 @@
             android:layout_marginTop="128dp"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ico_email"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
