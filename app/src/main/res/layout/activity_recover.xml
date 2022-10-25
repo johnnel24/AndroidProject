@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".RecoverActivity">
 
-    <Button
-        android:id="@+id/btnLogout"
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="logout"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="313dp" />
+        android:text="recover TODO"
+        tools:layout_editor_absoluteX="64dp"
+        tools:layout_editor_absoluteY="131dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

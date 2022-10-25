@@ -26,20 +26,17 @@ public class databaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void checkTableExist(String[] tables) {
+    public void checkTableExist() {
         SQLiteDatabase db = this.getWritableDatabase();
+        String checkUserTable = "CREATE TABLE IF NOT EXISTS user ( userId INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, fname TEXT, lname TEXT, password TEXT, role TEXT, isLoggedIn INTEGER, datejoined TEXT );";
+        String checkBookTable = "CREATE TABLE IF NOT EXISTS book ( ISBN TEXT PRIMARY KEY, title TEXT, author TEXT, category TEXT, description TEXT, pubDate TEXT, dateAdded TEXT, pdfFile TEXT );";
+        String checkBookList = "CREATE TABLE IF NOT EXISTS booklist ( bookListId INTEGER PRIMARY KEY AUTOINCREMENT, dateAdded TEXT, userId INTEGER, ISBN TEXT );";
+        String checkRecover = "CREATE TABLE IF NOT EXISTS recovery( recoveryId INTEGER PRIMARY KEY AUTOINCREMENT, requestDate TEXT, userId INTEGER );";
 
-        for (String target : tables) {
-            String queryCreate = "CREATE TABLE IF NOT EXISTS user (" +
-                    "userId INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "email TEXT, " +
-                    "fname TEXT, " +
-                    "lname TEXT, " +
-                    "role TEXT, " +
-                    "isLoggedIn INTEGER, " +
-                    "datejoined TEXT);";
-            db.execSQL(queryCreate);
-        }
+        db.execSQL(checkUserTable);
+        db.execSQL(checkBookTable);
+        db.execSQL(checkBookList);
+        db.execSQL(checkRecover);
     }
 
     public boolean dropDb(SQLiteDatabase db, String dbName) {
@@ -47,17 +44,32 @@ public class databaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Boolean insertUser(String email, String fname, String lname, int isLoggedIn, int role) {
+    public boolean dropDbs(SQLiteDatabase db, String [] dbNames) {
+        for(String dbName : dbNames)
+            db.execSQL(String.format("drop Table if exists %s", dbName));
+        return true;
+    }
+
+    public Boolean insertUser(String email, String fname, String lname, String password, int isLoggedIn, int role, Date dateJoined) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
+
+            Cursor foundUser = getUser(String.format("SELECT * FROM user WHERE email='%s';", email), null);
+
+            if(foundUser.getCount() > 0) {
+                System.out.println("User already exist");
+                return false;
+            }
+
             ContentValues values = new ContentValues();
 
             values.put("email", email);
             values.put("fname", fname);
             values.put("lname", lname);
+            values.put("password", password);
             values.put("role", role);
             values.put("isLoggedIn", isLoggedIn);
-            values.put("dateJoined", formatDateTime(new Date()));
+            values.put("dateJoined", formatDateTime(dateJoined));
 
             db.insert("user", null, values);
             db.close();
@@ -69,11 +81,16 @@ public class databaseHelper extends SQLiteOpenHelper {
 
     public void updateUserLoginState(int userId, int toState) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(String.format("update user set isLoggedIn = %d where userId = %d", userId, toState));
+        try {
+            db.execSQL(String.format("update user set isLoggedIn = %d where userId = %d", toState, userId));
+        }catch (Exception e){  }
     }
 
     public Cursor getUser(String query, String[] args) {
-        Cursor result = this.getWritableDatabase().rawQuery(query, args);
+        Cursor result = null;
+        try{
+            result = this.getWritableDatabase().rawQuery(query, args);
+        }catch (Exception e){ System.out.println("ERR SQL GET USER: "+e.toString()); }
         return result;
     }
 
