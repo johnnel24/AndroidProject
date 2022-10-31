@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             findUser.moveToNext();
-            User user = new User(findUser.getInt(0), findUser.getString(1), findUser.getString(2), findUser.getString(3), findUser.getString(4),findUser.getInt(5), findUser.getInt(6), User.fromIoDateStringToDate(findUser.getString(7)));
+            User user = new User(findUser.getInt(0), findUser.getString(1), findUser.getString(2), findUser.getString(3), findUser.getString(4),findUser.getInt(5), User.fromIoDateStringToDate(findUser.getString(7)));
             if(!authHelper.comparePassword(password, user.getPassword())){
                 input_password.setError("Wrong Password!");
                 return;

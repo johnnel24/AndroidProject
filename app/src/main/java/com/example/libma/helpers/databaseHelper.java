@@ -29,7 +29,7 @@ public class databaseHelper extends SQLiteOpenHelper {
     public void checkTableExist() {
         SQLiteDatabase db = this.getWritableDatabase();
         String checkUserTable = "CREATE TABLE IF NOT EXISTS user ( userId INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, fname TEXT, lname TEXT, password TEXT, role TEXT, isLoggedIn INTEGER, datejoined TEXT );";
-        String checkBookTable = "CREATE TABLE IF NOT EXISTS book ( ISBN TEXT PRIMARY KEY, title TEXT, author TEXT, category TEXT, description TEXT, pubDate TEXT, dateAdded TEXT, pdfFile TEXT );";
+        String checkBookTable = "CREATE TABLE IF NOT EXISTS book ( ISBN_10 TEXT PRIMARY KEY, ISBN_13 TEXT, title TEXT, author TEXT, category TEXT, description TEXT, pubDate TEXT, dateAdded TEXT, pdfFile TEXT, save_count INTEGER, like_count INTEGER);";
         String checkBookList = "CREATE TABLE IF NOT EXISTS booklist ( bookListId INTEGER PRIMARY KEY AUTOINCREMENT, dateAdded TEXT, userId INTEGER, ISBN TEXT );";
         String checkRecover = "CREATE TABLE IF NOT EXISTS recovery( recoveryId INTEGER PRIMARY KEY AUTOINCREMENT, requestDate TEXT, userId INTEGER );";
 
@@ -93,6 +93,15 @@ public class databaseHelper extends SQLiteOpenHelper {
         }catch (Exception e){ System.out.println("ERR SQL GET USER: "+e.toString()); }
         return result;
     }
+
+    public Cursor execRawQuery(String query, String[] args) {
+        Cursor result = null;
+        try{
+            result = this.getWritableDatabase().rawQuery(query, args);
+        }catch (Exception e){ System.out.println("Err Execute Query : "+e.toString()); }
+        return result;
+    }
+
 
     public static String formatDateTime(Date date) {
         SimpleDateFormat sdf;

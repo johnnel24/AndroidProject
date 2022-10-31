@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             handler.postDelayed(() -> {
                 Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 result.moveToNext();
-                User user = new User(result.getInt(0), result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getInt(5), result.getInt(6), User.fromIoDateStringToDate(result.getString(7)));
+                User user = new User(result.getInt(0), result.getString(1), result.getString(2), result.getString(3), result.getString(4),result.getInt(5), User.fromIoDateStringToDate(result.getString(7)));
                 homeIntent.putExtra("CURRENT_USER", user);
                 startActivity(homeIntent);
                 finish();
