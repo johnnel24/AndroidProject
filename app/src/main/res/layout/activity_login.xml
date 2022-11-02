@@ -14,7 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/libma_logo"
-        tools:layout_editor_absoluteY="-18dp" />
+        tools:layout_editor_absoluteY="-18dp"
+        tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -31,15 +32,14 @@
         app:layout_constraintVertical_bias="1.0">
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/email1"
             android:layout_width="340dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
-            android:drawablePadding="8dp"
+            android:layout_marginTop="124dp"
             android:drawableStart="@drawable/ico_email"
+            android:drawablePadding="8dp"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +53,7 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email" />
+            app:layout_constraintTop_toBottomOf="@+id/email1" />
 
         <TextView
             android:id="@+id/textView2"
@@ -62,7 +62,7 @@
             android:layout_marginStart="36dp"
             android:layout_marginTop="52dp"
             android:text="Login"
-            android:textColor="#091E41"
+            android:textColor="#091E40"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
